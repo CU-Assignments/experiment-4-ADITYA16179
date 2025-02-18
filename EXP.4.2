@@ -1,0 +1,71 @@
+import java.util.*;
+
+class Card {
+    private String symbol;
+    private String value;
+
+    public Card(String symbol, String value) {
+        this.symbol = symbol;
+        this.value = value;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public String toString() {
+        return value + " of " + symbol;
+    }
+}
+
+public class CardCollection {
+    private static Collection<Card> cards = new ArrayList<>();
+
+    public static void addCard(String symbol, String value) {
+        cards.add(new Card(symbol, value));
+    }
+
+    public static List<Card> findCardsBySymbol(String symbol) {
+        List<Card> result = new ArrayList<>();
+        for (Card card : cards) {
+            if (card.getSymbol().equalsIgnoreCase(symbol)) {
+                result.add(card);
+            }
+        }
+        return result;
+    }
+
+    public static void displayCards() {
+        for (Card card : cards) {
+            System.out.println(card);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("1. Add Card\n2. Find Cards by Symbol\n3. Display All Cards\n4. Exit");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter Symbol and Value: ");
+                    addCard(scanner.next(), scanner.next());
+                    break;
+                case 2:
+                    System.out.print("Enter Symbol to Search: ");
+                    List<Card> foundCards = findCardsBySymbol(scanner.next());
+                    System.out.println(foundCards.isEmpty() ? "No cards found" : foundCards);
+                    break;
+                case 3:
+                    displayCards();
+                    break;
+                case 4:
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid choice");
+            }
+        }
+    }
+}
